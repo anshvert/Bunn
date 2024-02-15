@@ -1,3 +1,5 @@
+const sockets = []
+
 Bun.serve({
     fetch(req, server) {
       if (server.upgrade(req)) {
@@ -8,10 +10,13 @@ Bun.serve({
     websocket: {
       message(ws, message) {
         console.log('Message received: ' + message);
-        ws.send(`From Server: ${message}`)
+        sockets.forEach((socket) => {
+            socket.send(`From Server: ${message}`)
+        })
       },
       open(ws) {
         console.log('Client connected');
+        sockets.push(ws)
       },
     },
     port: 4000,
