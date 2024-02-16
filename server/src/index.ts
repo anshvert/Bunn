@@ -1,10 +1,10 @@
 import { Elysia } from "elysia";
 import { swagger } from '@elysiajs/swagger'
-import { userController } from "../controllers/user.controller";
+import { userController } from "./controllers/user.controller";
 import { cors } from '@elysiajs/cors'
 import { controllerMiddleWare } from "../types/types";
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 4000
 
 const app = new Elysia()
     .use(swagger({

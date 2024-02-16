@@ -581,6 +581,11 @@
   resolved "https://registry.yarnpkg.com/@solid-primitives/websocket/-/websocket-1.2.1.tgz#dfec6871a1bbf5708cd2e638e419ded1fd3def84"
   integrity sha512-mFX9kb/9IukZMrw24A1TQY69funGF+nHZ6HDk/avh7SupFQ2UpzxkFHTywEg+Piq3UKrq/hD/osGT6VGQrWNoQ==
 
+"@solidjs/router@^0.12.2":
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/@solidjs/router/-/router-0.12.2.tgz#9640c85d90da835135017a05213b97424fee9452"
+  integrity sha512-/bhnjmQLVGXiCjU5vmZ0sE4rs5WKFLrimeofiVNy1SpZeKTtVphfHcuphLlXK1z7ZVx0zHrZi6DE+RF59qM8AQ==
+
 "@types/babel__core@^7.20.4":
   version "7.20.5"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.20.5.tgz#3df15f27ba85319caa07ba08d0721889bb39c017"

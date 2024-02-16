@@ -1,29 +1,39 @@
 import type { Component } from 'solid-js';
 import { createWS } from '@solid-primitives/websocket';
-import { createSignal } from "solid-js";
-import Login from "./components/login";
-import Signup from "./components/signup";
+import { createSignal, createEffect } from "solid-js";
+import axios from 'axios';
+import "./styles/home.css"
+import Chat from "./components/chat";
 
 const App: Component = () => {
-    const [message, setMessage] = createSignal('')
-    const [receivedMessage, setReceivedMessage] = createSignal('')
-    const ws: WebSocket = createWS("ws://localhost:3000");
-    ws.addEventListener('open',() => {
-        ws.send("hello")
-    })
-    ws.addEventListener('message',({ data }) => {
-        setReceivedMessage(data)
-    })
-    const handleMessageChange = (e) => {
-        setMessage(e.target.value)
+    const [friends, setFriends] = createSignal([])
+    const [selectedFriend, setSelectedFriend] = createSignal("")
+
+    createEffect(async () => {
+        const friendList = await axios.get("http://localhost:4000/api/user/friends")
+        const friendUsernames = friendList.data.map((friend) => friend.username)
+        setFriends(friendUsernames)
+    },[])
+
+    const openChat = (friend) => {
+        setSelectedFriend(friend)
     }
-    const handleSendMessage = () => {
-        ws.send(message())
-    }
+
     return (
         <>
-            <Login/>
-            <Signup/>
+            <div class="chat-app">
+              <div class="sidebar">
+                <h2>Friends</h2>
+                <ul>
+                   {friends().map(friend => (
+                    <li>
+                      <button class="chat-btn" onclick={() => openChat(friend)}>{friend}</button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+             <Chat friend={selectedFriend()}/>
+            </div>
         </>
     );
 };

@@ -1,10 +1,11 @@
 /* @refresh reload */
 import { render } from 'solid-js/web';
-
-import './index.css';
+import { Route, Router } from "@solidjs/router";
 import App from './App';
+import Onboard from "./components/onboard";
+import './index.css';
 
-const root = document.getElementById('root');
+const root: HTMLElement = document.getElementById('root');
 
 if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   throw new Error(
@@ -12,4 +13,9 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   );
 }
 
-render(() => <App />, root!);
+render(() => (
+    <Router>
+        <Route path="/" component={App}></Route>
+        <Route path="/onboard" component={Onboard}></Route>
+    </Router>
+), root!);

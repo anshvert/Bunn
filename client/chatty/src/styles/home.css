@@ -1,0 +1,22 @@
+.chat-app {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+
+.chat-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.chat-btn:hover {
+  background-color: #45a049;
+}
