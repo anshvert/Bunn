@@ -1,23 +1,24 @@
-const sockets = []
+const chatMap = {"ansh": "Bunny", "Bunny":"Ansh"}
 
 Bun.serve({
     fetch(req, server) {
-      if (server.upgrade(req)) {
+        if (server.upgrade(req)) {
         return;
       }
-      return new Response('Upgrade failed :(', { status: 500 });
+        return new Response('Upgrade failed :(', { status: 500 });
     },
     websocket: {
-      message(ws, message) {
-        console.log('Message received: ' + message);
-        sockets.forEach((socket) => {
-            socket.send(`From Server: ${message}`)
-        })
+        message(ws, message: string) {
+        const messageData = JSON.parse(message)
+        if (messageData.action === "subscribe") {
+            ws.subscribe(messageData.topic)
+        } else {
+            ws.publish(chatMap[messageData.username],messageData.message)
+        }
       },
-      open(ws) {
+        open(ws) {
         console.log('Client connected');
-        sockets.push(ws)
       },
     },
-    port: 4000,
+    port: 4500,
 });

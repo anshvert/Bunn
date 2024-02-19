@@ -5,13 +5,14 @@ import '../../database/mongo'
 export const userController = (app: Elysia) =>
     app.group('/user', app =>
         app.post('/signUp', async ({ request, body, set }): Promise<void> => {
-            console.log(request,body)
             const newUser = new User({ username: body.username, email: body.email, password: body.password })
             await newUser.save()
-        }).get('/friends', async ({ request }) => {
-            console.log(request)
-            const friends = await User.find({}, { _id: 0, username: 1 }, { lean: true })
+        }).post('/friends', async ({ body }) => {
+            const friends = await User.find({ username: { $ne: body.username } }, { _id: 0, username: 1 }, { lean: true })
             console.log(friends)
             return friends
+        }).post('/login', async ({ body }) : Promise<boolean> => {
+            const checkUserExists = await User.findOne({ username: body.username, password: body.password }, {}, { lean: true })
+            return !!checkUserExists
         })
     )

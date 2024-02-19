@@ -1,22 +1,45 @@
 .chat-app {
   display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #1e1e1e; /* Dark background color */
+  color: #fff; /* Light text color */
 }
 
 .sidebar {
   width: 200px;
-  padding: 20px;
   background-color: #f0f0f0;
+  padding: 20px;
+  border-right: 1px solid #ccc;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
 }
 
 .chat-btn {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  border-radius: 5px;
   cursor: pointer;
-  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
-.chat-btn:hover {
-  background-color: #45a049;
+.chat-btn img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+
 }
