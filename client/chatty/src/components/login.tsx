@@ -1,21 +1,21 @@
 import { createSignal } from "solid-js";
 import axios from "axios";
-import { UserService } from "../stores/userState";
 import { useNavigate } from "@solidjs/router";
+import { useUserState } from "../stores/userState";
 
 const LoginForm = () => {
     const [username, setUsername] = createSignal("");
     const [password, setPassword] = createSignal("");
-    const { updateUser } = UserService()
     const navigate = useNavigate()
+    const [user,setUser] = useUserState()
 
     const handleLogin = async (e) => {
         e.preventDefault();
         const userData = { username: username(), password: password() }
         const userExists = await axios.post('http://localhost:4000/api/user/login',userData)
-        console.log(userExists)
         if (userExists.data) {
-            updateUser({ username: username(), password: password() })
+            setUser(userData)
+            localStorage.setItem("BNY:User", JSON.stringify(userData))
             navigate("/", { replace: true })
         }
   };

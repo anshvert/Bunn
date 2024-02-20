@@ -1,28 +1,22 @@
 import { Component, createSignal, createEffect } from "solid-js";
-import "../styles/chatApp.css";
+import { useSelectedFriend } from "../stores/friendState";
 import ws from "../bin/socket";
+import "../styles/chatApp.css";
 
 const ChatScreen: Component = () => {
     const [message, setMessage] = createSignal("");
     const [messages, setMessages] = createSignal([]);
+    const [selectedFriend, setSelectedFriend] = useSelectedFriend()
 
-    ws.addEventListener('open',() => {
-        const subscribeData = { action: "subscribe", topic: "" }
-        ws.send({})
-    })
     ws.addEventListener('message',({ data }) => {
-        console.log(data)
+        console.log(data,"XD")
+        setMessages([...messages(),data])
     })
-
-    // const handleMessageChange = (e) => {
-    //     setMessage(e.target.value)
-    // }
-    // const handleSendMessage = () => {
-    //     ws.send(message())
-    // }
 
     const sendMessage = () => {
         setMessages([...messages(), message()]);
+        const messageData = { action: "message", username: selectedFriend(), message: message() }
+        ws.send(JSON.stringify(messageData))
         setMessage("");
     };
 

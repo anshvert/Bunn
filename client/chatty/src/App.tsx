@@ -1,20 +1,32 @@
 import type { Component } from 'solid-js';
 import { createSignal, createEffect } from "solid-js";
 import axios from 'axios';
-import "./styles/home.css"
 import Chat from "./components/chat";
-import {UserService} from "./stores/userState";
+import { useUserState } from "./stores/userState";
+import "./styles/home.css"
+import { useSelectedFriend } from "./stores/friendState";
+import ws from "./bin/socket";
+import { useNavigate } from "@solidjs/router";
 
 const App: Component = () => {
     const [friends, setFriends] = createSignal([])
-    const [selectedFriend, setSelectedFriend] = createSignal("")
-    const { user } = UserService
+    const [user,setUser] = useUserState()
+    const [selectedFriend, setSelectedFriend] = useSelectedFriend()
+    const navigate = useNavigate()
 
     createEffect(async () => {
-        const friendList = await axios.post("http://localhost:4000/api/user/friends")
+        const userInf = localStorage.getItem("BNY:User")
+        if (!userInf) {
+            navigate("/onboard",{ replace: true })
+            return
+        }
+        setUser(JSON.parse(userInf))
+        const friendList = await axios.post("http://localhost:4000/api/user/friends",user)
         const friendUsernames = friendList.data.map((friend) => friend.username)
         setFriends(friendUsernames)
-        console.log(user)
+        setSelectedFriend(friendUsernames[0])
+        const subscribeData = { action: "subscribe", topics: [user.username] }
+        ws.send(JSON.stringify(subscribeData))
     },[])
 
     const openChat = (friend) => {
@@ -34,7 +46,7 @@ const App: Component = () => {
                   ))}
                 </ul>
               </div>
-             <Chat friend={selectedFriend()}/>
+             <Chat/>
             </div>
         </>
     );
