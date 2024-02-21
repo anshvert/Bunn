@@ -1,4 +1,4 @@
-import type {Elysia} from "elysia";
+import type { Elysia } from "elysia";
 import User from "../../schemas/User";
 import '../../database/mongo'
 

@@ -1,5 +1,5 @@
 import { createStore } from 'solid-js/store'
 
-const [userState, setUserState] = createStore()
+const [user, setUser] = createStore()
 
-export const useUserState = () => [userState,setUserState]
+export const useUserState = () => [user,setUser]

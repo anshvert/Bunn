@@ -2,19 +2,22 @@ import { createSignal } from "solid-js";
 import { inputEvent } from "../types/types";
 import { useNavigate } from "@solidjs/router";
 import axios from 'axios';
+import { useUserState } from "../stores/userState";
 
 const SignupForm = () => {
     const [username, setUsername] = createSignal("");
     const [email, setEmail] = createSignal("");
     const [password, setPassword] = createSignal("");
-    const navigate = useNavigate()
+    const [user,setUser] = useUserState()
+    const navigate= useNavigate()
 
-    const handleSignup = async (e) => {
+    const handleSignup = async (e): Promise<void> => {
         e.preventDefault();
         const userData = { username: username(),email: email(), password: password() }
         const responseData = await axios.post('http://localhost:4000/api/user/signUp',userData)
-        console.log(responseData)
         if (responseData.status == 200) {
+            setUser(userData)
+            localStorage.setItem("BNY:User", JSON.stringify(userData))
             navigate("/", { replace: true })
         }
     };
