@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const mongoDBURI: string = process.env.MONGODB_URI ?? 'mongodb://localhost:27017/Bunny';
+const mongoDBURI: string = process.env.MONGODB_URI ?? 'mongodb+srv://ansh:Ansh2222@radiant.vfzdf6u.mongodb.net/Buny';
 
 mongoose.connect(mongoDBURI)
     .then((): void => {
