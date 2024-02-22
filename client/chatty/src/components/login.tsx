@@ -12,7 +12,7 @@ const LoginForm = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         const userData = { username: username(), password: password() }
-        const userExists = await axios.post('http://localhost:4000/api/user/login',userData)
+        const userExists = await axios.post('https://buny-be.onrender.com/api/user/login',userData)
         if (userExists.data) {
             setUser(userData)
             localStorage.setItem("BNY:User", JSON.stringify(userData))

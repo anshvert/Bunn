@@ -14,7 +14,7 @@ const SignupForm = () => {
     const handleSignup = async (e): Promise<void> => {
         e.preventDefault();
         const userData = { username: username(),email: email(), password: password() }
-        const responseData = await axios.post('http://localhost:4000/api/user/signUp',userData)
+        const responseData = await axios.post('https://buny-be.onrender.com/api/user/signUp',userData)
         if (responseData.status == 200) {
             setUser(userData)
             localStorage.setItem("BNY:User", JSON.stringify(userData))
