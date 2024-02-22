@@ -44,7 +44,7 @@ const ChatScreen: Component = () => {
                 <div class="chat-messages">
                     {Object.entries(conversations()).map(([friend, messages], index) => (
                         friend === selectedFriend() ? (
-                            <div key={index}>
+                            <div key={index} class="chat-messages">
                                 {messages.map((msg, index) => (
                                     <div class={`message ${msg.sender === selectedFriend() ? "received" : "sent"}`}
                                          key={index}>{msg.message}

@@ -1,4 +1,4 @@
-FROM oven/bun
+FROM oven/bun:1 as base
 RUN mkdir -p /buny
 WORKDIR /buny
 
@@ -10,7 +10,5 @@ RUN bun install
 COPY . .
 
 EXPOSE 4000
-EXPOSE 4500
 
-CMD ["bun", "run", "prod"]
-CMD ["bun", "server.ts"]
+CMD ["bun", "prod"]

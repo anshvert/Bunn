@@ -7,6 +7,7 @@ Bun.serve({
     },
     websocket: {
         message(ws, message: string) {
+            console.log(message)
         const messageData = JSON.parse(message)
         if (messageData.action === "subscribe") {
             messageData.topics.forEach((topic) => {
