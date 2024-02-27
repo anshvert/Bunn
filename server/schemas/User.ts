@@ -24,8 +24,7 @@ const schema = new Schema<IUser>(
             required: true,
             select: false
         }
-    },
-    {
+    }, {
         timestamps: true
     }
 )

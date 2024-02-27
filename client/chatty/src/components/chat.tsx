@@ -3,6 +3,8 @@ import { useSelectedFriend } from "../stores/friendState";
 import ws from "../bin/socket";
 import { useUserState } from "../stores/userState";
 import "../styles/chatApp.css";
+import axios from "axios";
+import { serverURLs } from "../config";
 
 const ChatScreen: Component = () => {
     const [message, setMessage] = createSignal("");
@@ -18,10 +20,11 @@ const ChatScreen: Component = () => {
         }))
     })
 
-    const sendMessage = () => {
-        const messageData = { action: "message", receiver: selectedFriend(), sender: user.username ,message: message() }
+    const sendMessage = async () => {
+        const messageData = { action: "message", receiver: selectedFriend(), sender: user.username, message: message() }
         setConversations(prevConversations => ({...prevConversations,[selectedFriend()]: [...prevConversations[selectedFriend()] || [], messageData]}));
         ws.send(JSON.stringify(messageData))
+        await axios.post(`${serverURLs['dev']}api/message/save`,messageData)
         setMessage("");
     };
 
@@ -36,6 +39,12 @@ const ChatScreen: Component = () => {
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
     });
+
+    createEffect(async () => {
+        const messageQuery = { sender: user.username, receiver: selectedFriend() }
+        const messageData  = await axios.post(`${serverURLs['dev']}api/message/retrieve`, messageQuery)
+        setConversations(prevConversations => ({...prevConversations,[messageQuery.receiver]: messageData.data }))
+    })
 
     return (
         <>

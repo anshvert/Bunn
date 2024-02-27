@@ -3,10 +3,11 @@ import { createSignal, createEffect } from "solid-js";
 import axios from 'axios';
 import Chat from "./components/chat";
 import { useUserState } from "./stores/userState";
-import "./styles/home.css"
 import { useSelectedFriend } from "./stores/friendState";
 import ws from "./bin/socket";
 import { useNavigate } from "@solidjs/router";
+import "./styles/home.css"
+import { serverURLs } from "./config";
 
 const App: Component = () => {
     const [friends, setFriends] = createSignal([])
@@ -21,7 +22,7 @@ const App: Component = () => {
             return
         }
         setUser(JSON.parse(userInf))
-        const friendList = await axios.post("https://buny-be.onrender.com/api/user/friends",user)
+        const friendList = await axios.post(`${serverURLs['dev']}api/user/friends`,user)
         const friendUsernames = friendList.data.map((friend) => friend.username)
         setFriends(friendUsernames)
         setSelectedFriend(friendUsernames[0])
