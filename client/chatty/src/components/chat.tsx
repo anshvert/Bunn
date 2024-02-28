@@ -24,7 +24,7 @@ const ChatScreen: Component = () => {
         const messageData = { action: "message", receiver: selectedFriend(), sender: user.username, message: message() }
         setConversations(prevConversations => ({...prevConversations,[selectedFriend()]: [...prevConversations[selectedFriend()] || [], messageData]}));
         ws.send(JSON.stringify(messageData))
-        await axios.post(`${serverURLs['dev']}api/message/save`,messageData)
+        await axios.post(`${serverURLs['prod']}api/message/save`,messageData)
         setMessage("");
     };
 
@@ -42,7 +42,7 @@ const ChatScreen: Component = () => {
 
     createEffect(async () => {
         const messageQuery = { sender: user.username, receiver: selectedFriend() }
-        const messageData  = await axios.post(`${serverURLs['dev']}api/message/retrieve`, messageQuery)
+        const messageData  = await axios.post(`${serverURLs['prod']}api/message/retrieve`, messageQuery)
         setConversations(prevConversations => ({...prevConversations,[messageQuery.receiver]: messageData.data }))
     })
 
