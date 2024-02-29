@@ -11,9 +11,6 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
-        with:
-          path: 'server'
-          ref: 'master'
           
       - name: Log in to Docker Hub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
@@ -26,15 +23,18 @@ jobs:
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
           images: anshvert/buny
-
+    
+      - name: Navigates to Server Repository
+        run: cd server
+      
       - name: List server directory contents
-        run: ls -la ./server/server
+        run: ls -la 
       
       - name: Build and Publish Docker Image
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./server/server/Dockerfile
+          file: Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
