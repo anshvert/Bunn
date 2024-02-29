@@ -28,7 +28,7 @@ jobs:
           images: anshvert/buny
 
       - name: List server directory contents
-        run: ls -la ./server
+        run: ls -la
       
       - name: Build and Publish Docker Image
         uses: docker/build-push-action@v3
