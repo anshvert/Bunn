@@ -28,13 +28,13 @@ jobs:
           images: anshvert/buny
 
       - name: List server directory contents
-        run: ls -la
+        run: ls -la ./server/server
       
       - name: Build and Publish Docker Image
         uses: docker/build-push-action@v3
         with:
-          context: ./server/server
-          file: Dockerfile
+          context: ./server
+          file: ./server/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
