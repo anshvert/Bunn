@@ -30,7 +30,8 @@ jobs:
       - name: Build and Publish Docker Image
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./server
+          file: Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
