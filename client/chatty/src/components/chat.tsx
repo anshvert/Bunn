@@ -1,10 +1,10 @@
 import { Component, createSignal, createEffect } from "solid-js";
 import { useSelectedFriend } from "../stores/friendState";
-import ws from "../bin/socket";
 import { useUserState } from "../stores/userState";
-import "../styles/chatApp.css";
-import axios from "axios";
 import { serverURLs } from "../config";
+import axios from "axios";
+import ws from "../bin/socket";
+import "../styles/chatApp.css";
 
 const ChatScreen: Component = () => {
     const [message, setMessage] = createSignal("");

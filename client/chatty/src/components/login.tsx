@@ -1,7 +1,9 @@
 import { createSignal } from "solid-js";
-import axios from "axios";
 import { useNavigate } from "@solidjs/router";
 import { useUserState } from "../stores/userState";
+import { loginSuccessToast } from "./toast";
+import axios from "axios";
+import "../styles/login.css"
 
 const LoginForm = () => {
     const [username, setUsername] = createSignal("");
@@ -16,38 +18,44 @@ const LoginForm = () => {
         if (userExists.data) {
             setUser(userData)
             localStorage.setItem("BNY:User", JSON.stringify(userData))
+            loginSuccessToast()
             navigate("/", { replace: true })
         }
   };
 
   return (
-      <div class="container">
-        <h2>Login</h2>
-        <form onSubmit={handleLogin}>
-          <div class="form-group">
-            <label for="loginUsername">Username</label>
-            <input
-                type="text"
-                id="loginUsername"
-                value={username()}
-                onInput={(e) => setUsername(e.target.value)}
-                required
-            />
-          </div>
-          <div class="form-group">
-            <label for="loginPassword">Password</label>
-            <input
-                type="password"
-                id="loginPassword"
-                value={password()}
-                onInput={(e) => setPassword(e.target.value)}
-                required
-            />
-          </div>
-          <div class="form-group">
-            <button type="submit">Login</button>
-          </div>
-        </form>
+      <div class="login-form">
+         <div class="text">LOGIN</div>
+         <form onSubmit={handleLogin}>
+             <div class="field">
+                 <div class="fas fa-envelope"></div>
+                 <input
+                    type="text"
+                    id="loginUsername"
+                    value={username()}
+                    onInput={(e) => setUsername(e.target.value)}
+                    placeholder="Username"
+                    autocomplete="off"
+                    required
+                 />
+             </div>
+             <div class="field">
+                 <div class="fas fa-lock"></div>
+                 <input
+                    type="password"
+                    id="loginPassword"
+                    value={password()}
+                    onInput={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                    required
+                 />
+             </div>
+             <button type="submit">LOGIN</button>
+             {/*<div class="link">*/}
+             {/*    Not a member?*/}
+             {/*    <a href="#">Signup now</a>*/}
+             {/*</div>*/}
+         </form>
       </div>
   );
 };

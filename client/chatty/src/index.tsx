@@ -3,6 +3,7 @@ import { render } from 'solid-js/web';
 import { Route, Router } from "@solidjs/router";
 import App from './App';
 import Onboard from "./components/onboard";
+import { Toaster } from 'solid-toast';
 import './index.css';
 
 const root: HTMLElement = document.getElementById('root');
@@ -14,8 +15,11 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 }
 
 render(() => (
-    <Router>
-        <Route path="/" component={App}></Route>
-        <Route path="/onboard" component={Onboard}></Route>
-    </Router>
+    <>
+        <Router>
+            <Route path="/" component={App}></Route>
+            <Route path="/onboard" component={Onboard}></Route>
+        </Router>
+        <Toaster/>
+    </>
 ), root!);

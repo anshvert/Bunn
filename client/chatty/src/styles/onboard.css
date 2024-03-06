@@ -1,0 +1,35 @@
+.onboard {
+  display: flex; /* Makes the container a flexible box */
+  height: 100vh; /* Sets the container to take up the entire viewport height */
+  width: 100vw; /* Sets the container to take up the entire viewport width */
+  overflow: hidden; /* Prevents content from overflowing the container */
+}
+
+.onboard__login,
+.onboard__signup {
+  flex: 1; /* Makes both sides equally sized */
+  display: flex;
+  align-items: center; /* Centers content vertically */
+  justify-content: center; /* Centers content horizontally */
+  padding: 2rem; /* Adds padding for content */
+  text-align: center; /* Centers text within each side */
+}
+
+.onboard__divider {
+  width: 3px; /* Sets the thickness of the line */
+  height: 100%; /* Makes the line full height */
+  background-color: #3b9156; /* Sets the color of the line */
+  position: absolute; /* Positions the line on top of the content */
+  top: 0; /* Positions the line at the top */
+  left: 50%; /* Positions the line at the center horizontally */
+  transform: translateX(-70%); /* Centers the line within the container */
+  rotate: 30deg;
+}
+
+.onboard__login {
+  background-color: black; /* Background color for Login */
+}
+
+.onboard__signup {
+  background-color: black; /* Background color for Signup */
+}

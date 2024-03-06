@@ -3,6 +3,7 @@ import { inputEvent } from "../types/types";
 import { useNavigate } from "@solidjs/router";
 import axios from 'axios';
 import { useUserState } from "../stores/userState";
+import "../styles/signUp.css"
 
 const SignupForm = () => {
     const [username, setUsername] = createSignal("");
@@ -23,42 +24,40 @@ const SignupForm = () => {
     };
 
     return (
-      <div class="container">
-        <h2>Signup</h2>
+      <div class="signup-form">
+        <div class="text">SIGNUP</div>
         <form onSubmit={handleSignup}>
-          <div class="form-group">
-            <label for="signupUsername">Username</label>
+          <div class="field">
             <input
               type="text"
               id="signupUsername"
               value={username()}
               onInput={(e: inputEvent) => setUsername(e.target.value)}
+              placeholder="Username"
               required
             />
           </div>
-          <div class="form-group">
-            <label for="signupEmail">Email</label>
+          <div class="field">
             <input
               type="email"
               id="signupEmail"
               value={email()}
               onInput={(e: inputEvent) => setEmail(e.target.value)}
+              placeholder="Email"
               required
             />
           </div>
-          <div class="form-group">
-            <label for="signupPassword">Password</label>
+          <div class="field">
             <input
               type="password"
               id="signupPassword"
               value={password()}
               onInput={(e: inputEvent) => setPassword(e.target.value)}
+              placeholder="Password"
               required
             />
           </div>
-          <div class="form-group">
             <button type="submit">Signup</button>
-          </div>
         </form>
       </div>
     );
