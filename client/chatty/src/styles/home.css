@@ -2,8 +2,9 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  background-color: #1e1e1e; /* Dark background color */
+  background-color: #000000; /* Dark background color */
   color: #fff; /* Light text color */
+  overflow: hidden;
 }
 
 .sidebar {
@@ -33,6 +34,7 @@ li {
   cursor: pointer;
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 
 .chat-btn img {
