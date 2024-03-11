@@ -20,7 +20,7 @@ const ChatScreen: Component = () => {
         }))
     })
 
-    const sendMessage = async () => {
+    const sendMessage = async (): Promise<void> => {
         const messageData = { action: "message", receiver: selectedFriend(), sender: user.username, message: message() }
         setConversations(prevConversations => ({...prevConversations,[selectedFriend()]: [...prevConversations[selectedFriend()] || [], messageData]}));
         ws.send(JSON.stringify(messageData))
@@ -33,14 +33,14 @@ const ChatScreen: Component = () => {
     };
 
     // Scroll to the bottom of the chat window when new messages are added
-    createEffect(() => {
+    createEffect((): void => {
         const chatMessages = document.querySelector(".chat-messages");
         if (chatMessages) {
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
     });
 
-    createEffect(async () => {
+    createEffect(async (): Promise<void> => {
         const messageQuery = { sender: user.username, receiver: selectedFriend() }
         const messageData  = await axios.post(`${serverURLs['prod']}api/message/retrieve`, messageQuery)
         setConversations(prevConversations => ({...prevConversations,[messageQuery.receiver]: messageData.data }))
