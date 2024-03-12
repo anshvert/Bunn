@@ -1,6 +1,6 @@
 import { createEffect, createSignal } from "solid-js";
 import { LoggedInUserInfo, User } from "../interfaces/interfaces";
-import {getRandomAvatar, isLoggedIn} from "../utils/helper";
+import {getRandomAvatar, isDevEnv, isLoggedIn} from "../utils/helper";
 import axios from "axios";
 import { serverURLs } from "../config";
 import ws from "../bin/socket";
@@ -8,6 +8,7 @@ import { useSelectedFriend } from "../stores/friendState";
 import { useUserState } from "../stores/userState";
 import { useNavigate } from "@solidjs/router";
 import "../styles/friends.css"
+import { ENV } from "../utils/constants";
 
 const Friends = () => {
 
@@ -27,8 +28,9 @@ const Friends = () => {
             return
         }
         setUser(userData.data as User)
-        const friendList = await axios.post(`${serverURLs['prod']}api/user/friends`,user)
-        const friendUsernames = friendList.data.map((friend) => friend.username)
+        const friendList = await axios.post(`${serverURLs[ENV]}api/user/friends`,user)
+        console.log(friendList)
+        const friendUsernames = friendList.data.map((friend) => friend.sender !== user.username ? friend.sender : friend.receiver)
         setFriends(friendUsernames)
         setSelectedFriend(friendUsernames[0])
         const subscribeData = { action: "subscribe", topics: [user.username] }

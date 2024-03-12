@@ -2,11 +2,10 @@ import { Context, Elysia, InputSchema, MergeSchema, UnwrapRoute } from "elysia";
 import { swagger } from '@elysiajs/swagger'
 import { userController } from "./controllers/user.controller";
 import { cors } from '@elysiajs/cors'
-import { webSocketHandler } from "./sockets/wsHandler";
 import { WS } from "elysia/dist/ws/types";
 import { GetPathParameter, Prettify } from "elysia/dist/types";
-import {ServerWebSocket, WebSocketHandler} from "bun";
-import {messageController} from "./controllers/message.controller";
+import { ServerWebSocket, WebSocketHandler } from "bun";
+import { messageController } from "./controllers/message.controller";
 
 const PORT = process.env.PORT || 4000
 
@@ -25,7 +24,7 @@ const app = new Elysia()
                 ws.publish(message.receiver, JSON.stringify(message))
             }
         }
-    })
+    } as webSocketOptions)
     .use(swagger({
         path: "/v1/swagger",
         documentation: {

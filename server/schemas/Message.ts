@@ -1,9 +1,9 @@
 import { model, Schema } from "mongoose";
 
 export interface IMessage extends Document {
-    sender: Schema.Types.ObjectId,
-    receiver: Schema.Types.ObjectId,
-    message: String,
+    sender: string,
+    receiver: string,
+    message: string,
 }
 
 const schema = new Schema<IMessage>(

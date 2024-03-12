@@ -1,0 +1,73 @@
+.chat-requests-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chat-request-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer; /* Optional: Add hover effect */
+}
+
+.pending {
+  /*background-color: #383535;*/
+}
+
+.accepted {
+  /*background-color: #00ff00;*/
+}
+
+.rejected {
+  /*background-color: #c02a2a;*/
+}
+
+.request-info {
+  flex: 1;
+}
+
+.sender-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.request-message {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.request-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.accept-btn,
+.reject-btn {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.accepted-label,
+.rejected-label,
+.pending-label {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.accepted-label {
+  color: green;
+}
+
+.rejected-label {
+  color: red;
+}
+
+.pending-label {
+  color: gray;
+}
