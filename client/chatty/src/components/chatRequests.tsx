@@ -1,8 +1,8 @@
-import {createEffect, createSignal} from "solid-js";
+import { createEffect, createSignal } from "solid-js";
 import axios from "axios";
-import {serverURLs} from "../config";
-import {ENV} from "../utils/constants";
-import {useUserState} from "../stores/userState";
+import { serverURLs } from "../config";
+import { ENV } from "../utils/constants";
+import { useUserState } from "../stores/userState";
 import "../styles/chatReq.css"
 
 const ChatRequests = () => {
@@ -19,7 +19,7 @@ const ChatRequests = () => {
         );
     }
 
-    createEffect( async () => {
+    createEffect( async (): Promise<void> => {
         const chatRequests = await axios.post(`${serverURLs[ENV]}api/message/request/retrieve`,user)
         setChatRequests(chatRequests.data)
     },[])

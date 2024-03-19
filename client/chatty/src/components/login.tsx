@@ -3,7 +3,9 @@ import { useNavigate } from "@solidjs/router";
 import { useUserState } from "../stores/userState";
 import { loginSuccessToast } from "./toast";
 import axios from "axios";
-import "../styles/login.css"
+import { ENV } from "../utils/constants";
+import "../styles/login.scss"
+import {serverURLs} from "../config";
 
 const LoginForm = () => {
     const [username, setUsername] = createSignal("");
@@ -14,7 +16,7 @@ const LoginForm = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         const userData = { username: username(), password: password() }
-        const userExists = await axios.post('https://buny-be.onrender.com/api/user/login',userData)
+        const userExists = await axios.post(`${serverURLs[ENV]}api/user/login`,userData)
         if (userExists.data) {
             setUser(userData)
             localStorage.setItem("BNY:User", JSON.stringify(userData))

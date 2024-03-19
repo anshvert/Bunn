@@ -3,6 +3,7 @@ import { useSelectedFriend } from "../stores/friendState";
 import { useUserState } from "../stores/userState";
 import { serverURLs } from "../config";
 import axios from "axios";
+import { ENV } from "../utils/constants";
 import ws from "../bin/socket";
 import "../styles/chatApp.css";
 
@@ -24,7 +25,7 @@ const ChatScreen: Component = () => {
         const messageData = { action: "message", receiver: selectedFriend(), sender: user.username, message: message() }
         setConversations(prevConversations => ({...prevConversations,[selectedFriend()]: [...prevConversations[selectedFriend()] || [], messageData]}));
         ws.send(JSON.stringify(messageData))
-        await axios.post(`${serverURLs['prod']}api/message/save`,messageData)
+        await axios.post(`${serverURLs[ENV]}api/message/save`,messageData)
         setMessage("");
     };
 

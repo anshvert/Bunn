@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Belanosima&family=Rubik+Vinyl&display=swap');
+
+.search-bar
+{
+    width: 60px;
+    height: 60px;
+    margin: auto;
+    background-color: #000000;
+    display: flex;
+    border-radius: 0 30px 30px 30px;
+    transition: width 1s;
+    box-shadow: 5px 5px 20px #000000, -5px -5px 30px #000000;
+    position: fixed;
+    top: 10px;
+    left: 0;
+    right: 0;
+}
+.search-icon
+{
+    margin: auto auto auto 5px;
+    border-radius: 50%;
+    background-color: #1e1e1e;
+}
+.search-bar:hover
+{
+    width: 400px;
+    border-radius:  0 30px 30px 30px;
+}
+.search-input
+{
+    margin: auto;
+    display: none;
+    transition: display 12s;
+    outline: none;
+    border: none;
+    font-family: 'Belanosima', sans-serif;
+    border-radius: 25px;
+    padding-left: 10px;
+    background-color: #1e1e1e;
+    color: white;
+}
+.search-bar:hover .search-input
+{
+    display: inline-flex;
+    width: 78%;
+    height: 70%;
+}
+input[type="submit"]
+{
+    display: none;
+}
+@media only screen and (max-width: 600px)
+{
+    .search-bar:hover
+    {
+        width: 80%;
+        border-radius:  0% 30px 30px 15px;
+    }
+}

@@ -29,7 +29,6 @@ const Friends = () => {
         }
         setUser(userData.data as User)
         const friendList = await axios.post(`${serverURLs[ENV]}api/user/friends`,user)
-        console.log(friendList)
         const friendUsernames = friendList.data.map((friend) => friend.sender !== user.username ? friend.sender : friend.receiver)
         setFriends(friendUsernames)
         setSelectedFriend(friendUsernames[0])
