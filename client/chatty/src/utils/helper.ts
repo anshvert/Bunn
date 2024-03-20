@@ -47,3 +47,4 @@ export const isDevEnv = (): boolean => {
     const currentUrl: string = import.meta.url
     return currentUrl.includes("local")
 }
+

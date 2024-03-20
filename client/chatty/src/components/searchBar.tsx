@@ -1,26 +1,22 @@
 import { useUserState } from "../stores/userState";
-import { createSignal } from "solid-js";
 import searchIcon from "../assets/search.jpg"
 import "../styles/searchBar.scss"
 import SearchModal from "./searchModal";
+import {useSearchModal, useSearchQuery} from "../stores/searchState";
 
 const searchBar = () => {
 
     const [user, setUser] = useUserState()
-    const [isSearchModalOpen, setIsSearchModalOpen] = createSignal(false)
-    const [searchQuery, setSearchQuery] = createSignal("")
-
-    const handleModalOpen = () => {
-        setIsSearchModalOpen(true)
-    }
-
-    const handleCloseModal = () => {
-        setIsSearchModalOpen(false)
-    }
+    const [isSearchModalOpen, setIsSearchModalOpen] = useSearchModal()
+    const [searchQuery, setSearchQuery] = useSearchQuery()
 
     const handleSearchQuery = (query) => {
         setSearchQuery(query)
         console.log(searchQuery())
+    }
+
+    const handleModalOpen = () => {
+        setIsSearchModalOpen(true)
     }
 
     return (

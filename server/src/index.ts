@@ -6,6 +6,7 @@ import { WS } from "elysia/dist/ws/types";
 import { GetPathParameter, Prettify } from "elysia/dist/types";
 import { ServerWebSocket, WebSocketHandler } from "bun";
 import { messageController } from "./controllers/message.controller";
+import { searchController } from "./controllers/search.controller";
 
 const PORT = process.env.PORT || 4000
 
@@ -15,7 +16,7 @@ type webSocketOptions = WS.LocalHook<InputSchema<never & string>, MergeSchema<Un
 
 const app = new Elysia()
     .ws("/ws", {
-        message(ws: ServerWebSocket<Context>, message: string) {
+        message(ws: ServerWebSocket<Context>, message: any) {
             if (message.action === "subscribe") {
                 message.topics.forEach((topic) => {
                     ws.subscribe(topic)
@@ -36,7 +37,9 @@ const app = new Elysia()
     .use(cors())
     .get("/", () => "Hello Elysia")
     .group('/api',(app: Elysia<"/api">) =>
-        app.use(userController).use(messageController))
+        app.use(userController)
+            .use(messageController)
+            .use(searchController))
     .listen(PORT);
 
 console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`);
