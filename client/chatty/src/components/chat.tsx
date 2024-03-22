@@ -6,11 +6,13 @@ import axios from "axios";
 import { ENV } from "../utils/constants";
 import ws from "../bin/socket";
 import "../styles/chatApp.css";
+import {useLastMessage} from "../stores/messageState";
 
 const ChatScreen: Component = () => {
     const [message, setMessage] = createSignal("");
     const [conversations, setConversations] = createSignal({});
     const [selectedFriend] = useSelectedFriend()
+    const [lastMessageMap, setLastMessageMap] = useLastMessage()
     const [user] = useUserState()
 
     ws.addEventListener('message',({ data }) => {
@@ -26,7 +28,8 @@ const ChatScreen: Component = () => {
         setConversations(prevConversations => ({...prevConversations,[selectedFriend()]: [...prevConversations[selectedFriend()] || [], messageData]}));
         ws.send(JSON.stringify(messageData))
         await axios.post(`${serverURLs[ENV]}api/message/save`,messageData)
-        setMessage("");
+        setLastMessageMap(prevLastMessages => ({...prevLastMessages, [selectedFriend()]: message()}))
+        setMessage("")
     };
 
     const handleMessageChange = (e) => {

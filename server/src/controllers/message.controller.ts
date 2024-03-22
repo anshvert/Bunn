@@ -1,6 +1,6 @@
-import { Elysia } from "elysia";
-import Message, { IMessage } from "../../schemas/Message"
-import MessageRequest, { IMessageRequest } from "../../schemas/MessageRequest";
+import {Elysia} from "elysia";
+import Message, {IMessage} from "../../schemas/Message"
+import MessageRequest, {IMessageRequest} from "../../schemas/MessageRequest";
 
 export const messageController = (app: Elysia) =>
     app.group("/message",app =>
@@ -25,9 +25,25 @@ export const messageController = (app: Elysia) =>
                 ]
             },{},{ lean: true })
         }).post("/request/update", async ({ request, body }) => {
-            console.log(body)
             return MessageRequest.updateOne({
                 _id: body._id
             }, { status: body.status });
+        }).post("/retrieve/last", async ({ request, body }): Promise<any> => {
+            try {
+                const lastMessageMap = {}
+                const friends = body.friends
+                for (const friend of friends) {
+                    const lastMessageData = await Message.find({
+                        $or: [
+                            {sender: friend},
+                            {receiver: friend}
+                        ]
+                    }, { message: 1 }, {lean: true, sort: {createdAt: -1}, limit: 1})
+                    lastMessageMap[friend] = lastMessageData[0].message
+                }
+                return lastMessageMap
+            } catch (err) {
+                console.log(err.message)
+            }
         })
     )

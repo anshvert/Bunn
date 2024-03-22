@@ -5,6 +5,7 @@ import { serverURLs } from "../config";
 import { ENV } from "../utils/constants";
 import { useUserState } from "../stores/userState";
 import "../styles/searchModal.scss"
+import {useSelectedFriend} from "../stores/friendState";
 
 const searchModal = () => {
 
@@ -13,9 +14,23 @@ const searchModal = () => {
     const [searchQuery, setSearchQuery] = useSearchQuery()
     const [userSearchData, setUserSearchData] = createSignal([])
     const [messageSearchData, setMessageSearchData] = createSignal([])
+    const [selectedFriend, setSelectedFriend] = useSelectedFriend()
 
-    const handleModalClose = () => {
+    const handleModalClose = (): void => {
         setIsSearchModalOpen(false)
+    }
+
+    const handleMessageClick  = (msg): void => {
+        const reDirectFriend = msg.sender === user.username ? msg.receiver : msg.sender
+        setSelectedFriend(reDirectFriend)
+        handleModalClose()
+    }
+
+    const handleUserClick = async (clickedUser): Promise<void> => {
+        setSelectedFriend(clickedUser.username)
+        const reqBody = { sender: user.username, receiver: clickedUser.username, status: "accepted" }
+        await axios.post(`${serverURLs[ENV]}api/message/request`, reqBody)
+        handleModalClose()
     }
 
     createEffect(async (): Promise<void> => {
@@ -32,24 +47,33 @@ const searchModal = () => {
                 <div class={`modalHeader`}>
                     <h1>{`You searched for : ${searchQuery()}`}</h1>
                 </div>
-                <button onClick={handleModalClose}>&times;</button>
+                {/*<button onClick={handleModalClose}>&times;</button>*/}
                 <div class={`modalBody`}>
-                    <div class={`modalColumn`}>
-                        <h2>Users</h2>
-                        {userSearchData().map((user) => (
-                            <div>
-                                {user.username}
-                            </div>
-                        ))}
-                    </div>
-                    <div class={`modalColumn`}>
-                        <h2>Messages</h2>
-                        {messageSearchData().map((message) => (
-                            <div>
-                                {message.message}
-                            </div>
-                        ))}
-                    </div>
+                    {userSearchData().length && (
+                        <div class={`modalColumn`}>
+                            <h2>Users</h2>
+                            {userSearchData().map((user) => (
+                                <div class={`modalUser`}>
+                                    <div>{user.username}</div>
+                                    <button class={`modalUserBtn`} onClick={() => handleUserClick(user)}>Chat</button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    {messageSearchData().length && (
+                        <div class={`modalColumn`}>
+                            <h2>Messages</h2>
+                            {messageSearchData().map((message) => (
+                                <div onclick={() => handleMessageClick(message)}>
+                                    {message.sender === user.username ? (
+                                        <span>You: </span>) : (
+                                        <span>{message.sender}: </span>
+                                    )}
+                                    {message.message}
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         </>

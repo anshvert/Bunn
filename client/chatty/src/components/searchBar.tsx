@@ -12,7 +12,6 @@ const searchBar = () => {
 
     const handleSearchQuery = (query) => {
         setSearchQuery(query)
-        console.log(searchQuery())
     }
 
     const handleModalOpen = () => {
